@@ -11,16 +11,30 @@ struct CardNumberTextField: View {
     @Binding var cardNumber: String
     var title: String
 
+    @State private var internalText: String = ""
+
     var body: some View {
-        TextField(title, text: Binding(
-            get: { cardNumber },
-            set: { newValue in
-                let filtered = newValue.filter { $0.isNumber || $0 == " " }
-                if filtered != cardNumber {
-                    cardNumber = filtered
+        TextField(title, text: $internalText)
+            .keyboardType(.numberPad)
+            .onChange(of: internalText) { newValue in
+                let digitsOnly = newValue.filter { $0.isWholeNumber }
+                let limitedDigits = String(digitsOnly.prefix(16))
+
+                var formatted = ""
+                for (index, char) in limitedDigits.enumerated() {
+                    if index != 0 && index % 4 == 0 {
+                        formatted.append(" ")
+                    }
+                    formatted.append(char)
                 }
+
+                if internalText != formatted {
+                    internalText = formatted
+                }
+                cardNumber = formatted
             }
-        ))
-        .keyboardType(.numberPad)
+            .onAppear {
+                internalText = cardNumber
+            }
     }
 }

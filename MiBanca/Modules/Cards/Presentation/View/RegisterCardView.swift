@@ -17,30 +17,28 @@ struct RegisterCardView: View {
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
-        NavigationView {
-            Form {
-                Section(header: Text("Datos de la tarjeta")) {
-                    TextField("Nombre del tarjetahabiente", text: $name)
-                    CardNumberTextField(cardNumber: $number, title: "Numero de tarjeta")
-                    TextField("Fecha de expiración (MM/AA)", text: $expirationDate)
-                }
+        Form {
+            Section(header: Text("Datos de la tarjeta")) {
+                TextField("Nombre del tarjetahabiente", text: $name)
+                CardNumberTextField(cardNumber: $number, title: "Numero de tarjeta")
+                ExpirationDateTextField(expirationDate: $expirationDate)
             }
-            .navigationTitle("Registrar Tarjeta")
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Guardar") {
-                        let newCard = Card(nombreTarjetahabiente: name,
-                                                numeroTarjeta: number,
-                                                fechaExpiracion: expirationDate)
-                        onSave(newCard)
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                    .disabled(name.isEmpty || number.isEmpty || expirationDate.isEmpty)
+        }
+        .navigationTitle("Registrar Tarjeta")
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Guardar") {
+                    let newCard = Card(nombreTarjetahabiente: name,
+                                            numeroTarjeta: number,
+                                            fechaExpiracion: expirationDate)
+                    onSave(newCard)
+                    presentationMode.wrappedValue.dismiss()
                 }
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancelar") {
-                        presentationMode.wrappedValue.dismiss()
-                    }
+                .disabled(name.isEmpty || number.isEmpty || expirationDate.isEmpty)
+            }
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancelar") {
+                    presentationMode.wrappedValue.dismiss()
                 }
             }
         }

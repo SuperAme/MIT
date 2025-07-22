@@ -12,47 +12,39 @@ struct LoginView: View {
     @StateObject var viewModel = LoginViewModel(authUseCase: AuthRepository())
 
     var body: some View {
-        NavigationView {
-            VStack(spacing: 16) {
-                TextField("Usuario", text: $viewModel.username)
-                    .frame(height: 24)
-                    .autocapitalization(.none)
-                    .modifier(RoundedTextFieldStyle())
+        VStack(spacing: 16) {
+            TextField("Usuario", text: $viewModel.username)
+                .frame(height: 24)
+                .autocapitalization(.none)
+                .modifier(RoundedTextFieldStyle())
 
-                PasswordField(password: $viewModel.password)
+            PasswordField(password: $viewModel.password)
 
-                Button("Iniciar Sesión") {
-                    if viewModel.login() {
-                        session.isLoggedIn = true
-                    }
-                }
-
-                Button("Crear Cuenta") {
-                    viewModel.register()
-                }
-
-                if let error = viewModel.errorMessage {
-                    Text(error)
-                        .foregroundColor(.red)
-                }
-
-                NavigationLink(
-                    destination: MainMenuView(),
-                    isActive: $viewModel.loginSuccess
-                ) {
-                    EmptyView()
+            Button("Iniciar Sesión") {
+                if viewModel.login() {
+                    session.isLoggedIn = true
                 }
             }
-            .padding()
-            .navigationTitle("Login")
-            .alert("Cuenta creada", isPresented: $viewModel.showSuccessAlert) {
-                Button("Aceptar") {
-                    viewModel.loginSuccess = true
-                }
-            } message: {
-                Text("Tu cuenta fue creada exitosamente.")
+
+            Button("Crear Cuenta") {
+                viewModel.register()
+            }
+
+            if let error = viewModel.errorMessage {
+                Text(error)
+                    .foregroundColor(.red)
             }
         }
+        .padding()
+        .navigationTitle("Login")
+        .alert("Cuenta creada", isPresented: $viewModel.showSuccessAlert) {
+            Button("Aceptar") {
+                session.isLoggedIn = true
+            }
+        } message: {
+            Text("Tu cuenta fue creada exitosamente.")
+        }
+
     }
 }
 
