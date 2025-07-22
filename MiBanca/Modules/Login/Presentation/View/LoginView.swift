@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
+    @EnvironmentObject var session: SessionManager
     @StateObject var viewModel = LoginViewModel(authUseCase: AuthRepository())
 
     var body: some View {
@@ -21,7 +22,9 @@ struct LoginView: View {
                 PasswordField(password: $viewModel.password)
 
                 Button("Iniciar Sesión") {
-                    viewModel.login()
+                    if viewModel.login() {
+                        session.isLoggedIn = true
+                    }
                 }
 
                 Button("Crear Cuenta") {

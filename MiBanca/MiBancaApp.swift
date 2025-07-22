@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct MiBancaApp: App {
+    @StateObject private var session = SessionManager()
+
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            RootView()
+                .environmentObject(session)
         }
     }
 }

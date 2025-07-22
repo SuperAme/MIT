@@ -8,27 +8,25 @@
 import Foundation
 import SwiftUI
 
-import SwiftUI
-
 struct MainMenuView: View {
+    @EnvironmentObject var session: SessionManager
     @StateObject var viewModel = MainMenuViewModel()
 
     var body: some View {
         NavigationView {
             List {
-                NavigationLink("Mis tarjetas", destination: Text("Mis tarjetas"))
-                NavigationLink("Pagar", destination: Text("Pagar"))
-                NavigationLink("Mis movimientos", destination: Text("Mis movimientos"))
+                NavigationLink("Mis tarjetas", destination: MyCardsView())
+                NavigationLink("Pagar", destination: Text("Payment"))
+                NavigationLink("Mis movimientos", destination: Text("Movements"))
 
                 Button("Cerrar sesión") {
                     viewModel.logout()
+                    session.isLoggedIn = false
                 }
                 .foregroundColor(.red)
             }
             .navigationTitle("Menú Principal")
-            .fullScreenCover(isPresented: $viewModel.isLoggedOut) {
-                LoginView()
-            }
+            .navigationBarBackButtonHidden(true)
         }
     }
 }

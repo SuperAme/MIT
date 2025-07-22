@@ -21,13 +21,14 @@ class LoginViewModel: ObservableObject {
         self.loginSuccess = authUseCase.isLoggedIn()
     }
 
-    func login() {
+    func login() -> Bool {
         do {
             try authUseCase.login(user: username, password: password)
             errorMessage = nil
-            loginSuccess = true
+            return true
         } catch {
             errorMessage = error.localizedDescription
+            return false
         }
     }
 
