@@ -22,8 +22,7 @@ struct PaymentView: View {
             }
 
             Section(header: Text("Datos del destinatario")) {
-                TextField("Número de tarjeta destino", text: $viewModel.destinyCard)
-                    .keyboardType(.numberPad)
+                CardNumberTextField(cardNumber: $viewModel.destinyCard, title: "Número de tarjeta destino")
                 TextField("Nombre del destinatario", text: $viewModel.recipientName)
                 TextField("Motivo del pago", text: $viewModel.motivo)
             }
@@ -34,9 +33,12 @@ struct PaymentView: View {
             }
 
             Button("Realizar pago") {
-                viewModel.realizarPago()
+                viewModel.makePayment()
             }
         }
+        .onAppear(perform: {
+            viewModel.getLocationPermissions()
+        })
         .navigationTitle("Pagar")
         .alert(isPresented: $viewModel.madePayment) {
             Alert(title: Text("Pago realizado"), message: Text("El pago fue exitoso."), dismissButton: .default(Text("OK")))

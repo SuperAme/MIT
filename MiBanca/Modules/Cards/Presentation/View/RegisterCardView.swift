@@ -21,8 +21,7 @@ struct RegisterCardView: View {
             Form {
                 Section(header: Text("Datos de la tarjeta")) {
                     TextField("Nombre del tarjetahabiente", text: $name)
-                    TextField("Número de tarjeta", text: $number)
-                        .keyboardType(.numberPad)
+                    CardNumberTextField(cardNumber: $number, title: "Numero de tarjeta")
                     TextField("Fecha de expiración (MM/AA)", text: $expirationDate)
                 }
             }

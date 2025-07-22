@@ -10,23 +10,21 @@ import SwiftUI
 
 struct MainMenuView: View {
     @EnvironmentObject var session: SessionManager
-    @StateObject var viewModel = MainMenuViewModel()
 
     var body: some View {
-        NavigationView {
-            List {
-                NavigationLink("Mis tarjetas", destination: MyCardsView())
-                NavigationLink("Pagar", destination: PaymentView())
-                NavigationLink("Mis movimientos", destination: Text("Movements"))
+        let viewModel = MainMenuViewModel(session: session)
+        List {
+            NavigationLink("Mis tarjetas", destination: MyCardsView())
+            NavigationLink("Pagar", destination: PaymentView())
+            NavigationLink("Mis movimientos", destination: MovementsView())
 
-                Button("Cerrar sesión") {
-                    viewModel.logout()
-                    session.isLoggedIn = false
-                }
-                .foregroundColor(.red)
+            Button("Cerrar sesión") {
+                viewModel.logout()
+                session.isLoggedIn = false
             }
-            .navigationTitle("Menú Principal")
-            .navigationBarBackButtonHidden(true)
+            .foregroundColor(.red)
         }
+        .navigationTitle("Menú Principal")
+        .navigationBarBackButtonHidden(true)
     }
 }

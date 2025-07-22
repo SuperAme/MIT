@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 struct Payment: Identifiable, Codable {
     let id = UUID()
@@ -14,4 +15,10 @@ struct Payment: Identifiable, Codable {
     let destinataryName: String
     let concept: String
     let date: Date
+    let location: PaymentLocation?
+}
+
+struct PaymentLocation: Codable {
+    let latitude: Double
+    let longitude: Double
 }
