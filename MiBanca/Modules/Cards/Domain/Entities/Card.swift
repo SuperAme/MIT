@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Card: Identifiable, Codable {
+struct Card: Identifiable, Codable, Hashable {
     let id = UUID()
     var nombreTarjetahabiente: String
     var numeroTarjeta: String

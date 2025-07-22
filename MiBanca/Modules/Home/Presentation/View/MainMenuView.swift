@@ -16,7 +16,7 @@ struct MainMenuView: View {
         NavigationView {
             List {
                 NavigationLink("Mis tarjetas", destination: MyCardsView())
-                NavigationLink("Pagar", destination: Text("Payment"))
+                NavigationLink("Pagar", destination: PaymentView())
                 NavigationLink("Mis movimientos", destination: Text("Movements"))
 
                 Button("Cerrar sesión") {
