@@ -10,8 +10,9 @@ import SwiftUI
 @main
 struct MiBancaApp: App {
     @StateObject private var session = SessionManager()
-
+    var test: String = "Only testing"
     var body: some Scene {
+
         WindowGroup {
             RootView()
                 .environmentObject(session)
